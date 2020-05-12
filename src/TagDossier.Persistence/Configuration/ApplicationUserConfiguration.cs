@@ -9,7 +9,7 @@ namespace TagDossier.Persistence.Configuration
         public void Configure(EntityTypeBuilder<ApplicationUser> builder)
         {
             builder.Property(x => x.FirstName)
-                .HasMaxLength(255)
+                .HasMaxLength(256)
                 .IsRequired();
         }
     }
