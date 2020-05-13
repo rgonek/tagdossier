@@ -13,7 +13,7 @@ namespace TagDossier.Domain.Entities
         public static readonly Connector[] AllConnectors = { Dropbox, GoogleDrive, OneDrive };
 
         public string Name { get; private set; }
-
+        
         public Connector(string name)
         {
             SetName(name);

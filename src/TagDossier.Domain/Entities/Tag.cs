@@ -10,6 +10,10 @@ namespace TagDossier.Domain.Entities
         public Color Color { get; private set; }
         public Tag Parent { get; private set; }
 
+        private Tag()
+        {
+        }
+
         public Tag(string name, Color color, Tag parent = null)
         {
             SetName(name);

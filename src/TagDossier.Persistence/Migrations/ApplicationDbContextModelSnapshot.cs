@@ -217,6 +217,106 @@ namespace TagDossier.Persistence.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("TagDossier.Domain.Entities.Connector", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("character varying(256)")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Connector");
+                });
+
+            modelBuilder.Entity("TagDossier.Domain.Entities.Dossier", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<long>("ResourceId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("TagId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ResourceId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("Dossier");
+                });
+
+            modelBuilder.Entity("TagDossier.Domain.Entities.Resource", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("ExternalId")
+                        .IsRequired()
+                        .HasColumnType("character varying(2000)")
+                        .HasMaxLength(2000);
+
+                    b.Property<int>("SourceId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SourceId");
+
+                    b.ToTable("Resource");
+                });
+
+            modelBuilder.Entity("TagDossier.Domain.Entities.Source", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("ConnectorId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConnectorId");
+
+                    b.ToTable("Source");
+                });
+
+            modelBuilder.Entity("TagDossier.Domain.Entities.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("character varying(1000)")
+                        .HasMaxLength(1000);
+
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("Tag");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
@@ -266,6 +366,269 @@ namespace TagDossier.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("TagDossier.Domain.Entities.Dossier", b =>
+                {
+                    b.HasOne("TagDossier.Domain.Entities.Resource", "Resource")
+                        .WithMany("Dossiers")
+                        .HasForeignKey("ResourceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TagDossier.Domain.Entities.Tag", "Tag")
+                        .WithMany()
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsOne("TagDossier.Domain.ValueObjects.AuditInfo", "Created", b1 =>
+                        {
+                            b1.Property<long>("DossierId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<Guid?>("ById")
+                                .HasColumnType("uuid");
+
+                            b1.Property<DateTime>("On")
+                                .HasColumnType("timestamp without time zone");
+
+                            b1.HasKey("DossierId");
+
+                            b1.HasIndex("ById");
+
+                            b1.ToTable("Dossier");
+
+                            b1.HasOne("TagDossier.Domain.Entities.ApplicationUser", "By")
+                                .WithMany()
+                                .HasForeignKey("ById");
+
+                            b1.WithOwner()
+                                .HasForeignKey("DossierId");
+                        });
+
+                    b.OwnsOne("TagDossier.Domain.ValueObjects.AuditInfo", "LastModified", b1 =>
+                        {
+                            b1.Property<long>("DossierId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<Guid?>("ById")
+                                .HasColumnType("uuid");
+
+                            b1.Property<DateTime>("On")
+                                .HasColumnType("timestamp without time zone");
+
+                            b1.HasKey("DossierId");
+
+                            b1.HasIndex("ById");
+
+                            b1.ToTable("Dossier");
+
+                            b1.HasOne("TagDossier.Domain.Entities.ApplicationUser", "By")
+                                .WithMany()
+                                .HasForeignKey("ById");
+
+                            b1.WithOwner()
+                                .HasForeignKey("DossierId");
+                        });
+                });
+
+            modelBuilder.Entity("TagDossier.Domain.Entities.Resource", b =>
+                {
+                    b.HasOne("TagDossier.Domain.Entities.Source", "Source")
+                        .WithMany()
+                        .HasForeignKey("SourceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsOne("TagDossier.Domain.ValueObjects.AuditInfo", "Created", b1 =>
+                        {
+                            b1.Property<long>("ResourceId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<Guid?>("ById")
+                                .HasColumnType("uuid");
+
+                            b1.Property<DateTime>("On")
+                                .HasColumnType("timestamp without time zone");
+
+                            b1.HasKey("ResourceId");
+
+                            b1.HasIndex("ById");
+
+                            b1.ToTable("Resource");
+
+                            b1.HasOne("TagDossier.Domain.Entities.ApplicationUser", "By")
+                                .WithMany()
+                                .HasForeignKey("ById");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ResourceId");
+                        });
+
+                    b.OwnsOne("TagDossier.Domain.ValueObjects.AuditInfo", "LastModified", b1 =>
+                        {
+                            b1.Property<long>("ResourceId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<Guid?>("ById")
+                                .HasColumnType("uuid");
+
+                            b1.Property<DateTime>("On")
+                                .HasColumnType("timestamp without time zone");
+
+                            b1.HasKey("ResourceId");
+
+                            b1.HasIndex("ById");
+
+                            b1.ToTable("Resource");
+
+                            b1.HasOne("TagDossier.Domain.Entities.ApplicationUser", "By")
+                                .WithMany()
+                                .HasForeignKey("ById");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ResourceId");
+                        });
+                });
+
+            modelBuilder.Entity("TagDossier.Domain.Entities.Source", b =>
+                {
+                    b.HasOne("TagDossier.Domain.Entities.Connector", "Connector")
+                        .WithMany()
+                        .HasForeignKey("ConnectorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsOne("TagDossier.Domain.ValueObjects.AuditInfo", "Created", b1 =>
+                        {
+                            b1.Property<int?>("SourceTempId")
+                                .HasColumnType("integer");
+
+                            b1.Property<Guid?>("ById")
+                                .HasColumnType("uuid");
+
+                            b1.Property<DateTime>("On")
+                                .HasColumnType("timestamp without time zone");
+
+                            b1.HasKey("SourceTempId");
+
+                            b1.HasIndex("ById");
+
+                            b1.ToTable("Source");
+
+                            b1.HasOne("TagDossier.Domain.Entities.ApplicationUser", "By")
+                                .WithMany()
+                                .HasForeignKey("ById");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SourceTempId");
+                        });
+
+                    b.OwnsOne("TagDossier.Domain.ValueObjects.AuditInfo", "LastModified", b1 =>
+                        {
+                            b1.Property<int?>("SourceTempId1")
+                                .HasColumnType("integer");
+
+                            b1.Property<Guid?>("ById")
+                                .HasColumnType("uuid");
+
+                            b1.Property<DateTime>("On")
+                                .HasColumnType("timestamp without time zone");
+
+                            b1.HasKey("SourceTempId1");
+
+                            b1.HasIndex("ById");
+
+                            b1.ToTable("Source");
+
+                            b1.HasOne("TagDossier.Domain.Entities.ApplicationUser", "By")
+                                .WithMany()
+                                .HasForeignKey("ById");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SourceTempId1");
+                        });
+                });
+
+            modelBuilder.Entity("TagDossier.Domain.Entities.Tag", b =>
+                {
+                    b.HasOne("TagDossier.Domain.Entities.Tag", "Parent")
+                        .WithMany()
+                        .HasForeignKey("ParentId");
+
+                    b.OwnsOne("TagDossier.Domain.ValueObjects.AuditInfo", "Created", b1 =>
+                        {
+                            b1.Property<int>("TagId")
+                                .HasColumnType("integer");
+
+                            b1.Property<Guid?>("ById")
+                                .HasColumnType("uuid");
+
+                            b1.Property<DateTime>("On")
+                                .HasColumnType("timestamp without time zone");
+
+                            b1.HasKey("TagId");
+
+                            b1.HasIndex("ById");
+
+                            b1.ToTable("Tag");
+
+                            b1.HasOne("TagDossier.Domain.Entities.ApplicationUser", "By")
+                                .WithMany()
+                                .HasForeignKey("ById");
+
+                            b1.WithOwner()
+                                .HasForeignKey("TagId");
+                        });
+
+                    b.OwnsOne("TagDossier.Domain.ValueObjects.AuditInfo", "LastModified", b1 =>
+                        {
+                            b1.Property<int>("TagId")
+                                .HasColumnType("integer");
+
+                            b1.Property<Guid?>("ById")
+                                .HasColumnType("uuid");
+
+                            b1.Property<DateTime>("On")
+                                .HasColumnType("timestamp without time zone");
+
+                            b1.HasKey("TagId");
+
+                            b1.HasIndex("ById");
+
+                            b1.ToTable("Tag");
+
+                            b1.HasOne("TagDossier.Domain.Entities.ApplicationUser", "By")
+                                .WithMany()
+                                .HasForeignKey("ById");
+
+                            b1.WithOwner()
+                                .HasForeignKey("TagId");
+                        });
+
+                    b.OwnsOne("TagDossier.Domain.ValueObjects.Color", "Color", b1 =>
+                        {
+                            b1.Property<int>("TagId")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("Background")
+                                .IsRequired()
+                                .HasColumnName("BackgroundColor")
+                                .HasColumnType("varchar(6)");
+
+                            b1.Property<string>("Text")
+                                .IsRequired()
+                                .HasColumnName("TextColor")
+                                .HasColumnType("varchar(6)");
+
+                            b1.HasKey("TagId");
+
+                            b1.ToTable("Tag");
+
+                            b1.WithOwner()
+                                .HasForeignKey("TagId");
+                        });
                 });
 #pragma warning restore 612, 618
         }

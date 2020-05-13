@@ -12,6 +12,10 @@ namespace TagDossier.Domain.Entities
         private readonly List<Dossier> _dossiers = new List<Dossier>();
         public IReadOnlyCollection<Dossier> Dossiers => _dossiers.AsReadOnly();
 
+        private Resource()
+        {
+        }
+
         public Resource(Source source, string externalId)
         {
             Guard.Argument(source, nameof(source)).NotNull();
