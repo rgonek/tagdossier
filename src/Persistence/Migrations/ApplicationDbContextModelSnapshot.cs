@@ -23,21 +23,26 @@ namespace TagDossier.Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
                         .HasColumnType("uuid");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .HasColumnName("concurrency_stamp")
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
+                        .HasColumnName("name")
                         .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("NormalizedName")
+                        .HasColumnName("normalized_name")
                         .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_roles");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
@@ -50,21 +55,27 @@ namespace TagDossier.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("ClaimType")
+                        .HasColumnName("claim_type")
                         .HasColumnType("text");
 
                     b.Property<string>("ClaimValue")
+                        .HasColumnName("claim_value")
                         .HasColumnType("text");
 
                     b.Property<Guid>("RoleId")
+                        .HasColumnName("role_id")
                         .HasColumnType("uuid");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_role_claims");
 
-                    b.HasIndex("RoleId");
+                    b.HasIndex("RoleId")
+                        .HasName("ix_role_claims_role_id");
 
                     b.ToTable("AspNetRoleClaims");
                 });
@@ -73,21 +84,27 @@ namespace TagDossier.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("ClaimType")
+                        .HasColumnName("claim_type")
                         .HasColumnType("text");
 
                     b.Property<string>("ClaimValue")
+                        .HasColumnName("claim_value")
                         .HasColumnType("text");
 
                     b.Property<Guid>("UserId")
+                        .HasColumnName("user_id")
                         .HasColumnType("uuid");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_user_claims");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .HasName("ix_user_claims_user_id");
 
                     b.ToTable("AspNetUserClaims");
                 });
@@ -95,20 +112,26 @@ namespace TagDossier.Persistence.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.Property<string>("LoginProvider")
+                        .HasColumnName("login_provider")
                         .HasColumnType("text");
 
                     b.Property<string>("ProviderKey")
+                        .HasColumnName("provider_key")
                         .HasColumnType("text");
 
                     b.Property<string>("ProviderDisplayName")
+                        .HasColumnName("provider_display_name")
                         .HasColumnType("text");
 
                     b.Property<Guid>("UserId")
+                        .HasColumnName("user_id")
                         .HasColumnType("uuid");
 
-                    b.HasKey("LoginProvider", "ProviderKey");
+                    b.HasKey("LoginProvider", "ProviderKey")
+                        .HasName("pk_user_logins");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .HasName("ix_user_logins_user_id");
 
                     b.ToTable("AspNetUserLogins");
                 });
@@ -116,14 +139,18 @@ namespace TagDossier.Persistence.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
                     b.Property<Guid>("UserId")
+                        .HasColumnName("user_id")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("RoleId")
+                        .HasColumnName("role_id")
                         .HasColumnType("uuid");
 
-                    b.HasKey("UserId", "RoleId");
+                    b.HasKey("UserId", "RoleId")
+                        .HasName("pk_user_roles");
 
-                    b.HasIndex("RoleId");
+                    b.HasIndex("RoleId")
+                        .HasName("ix_user_roles_role_id");
 
                     b.ToTable("AspNetUserRoles");
                 });
@@ -131,18 +158,23 @@ namespace TagDossier.Persistence.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
                     b.Property<Guid>("UserId")
+                        .HasColumnName("user_id")
                         .HasColumnType("uuid");
 
                     b.Property<string>("LoginProvider")
+                        .HasColumnName("login_provider")
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
+                        .HasColumnName("name")
                         .HasColumnType("text");
 
                     b.Property<string>("Value")
+                        .HasColumnName("value")
                         .HasColumnType("text");
 
-                    b.HasKey("UserId", "LoginProvider", "Name");
+                    b.HasKey("UserId", "LoginProvider", "Name")
+                        .HasName("pk_user_tokens");
 
                     b.ToTable("AspNetUserTokens");
                 });
@@ -151,61 +183,78 @@ namespace TagDossier.Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
                         .HasColumnType("uuid");
 
                     b.Property<int>("AccessFailedCount")
+                        .HasColumnName("access_failed_count")
                         .HasColumnType("integer");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .HasColumnName("concurrency_stamp")
                         .HasColumnType("text");
 
                     b.Property<string>("Email")
+                        .HasColumnName("email")
                         .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed")
+                        .HasColumnName("email_confirmed")
                         .HasColumnType("boolean");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
+                        .HasColumnName("first_name")
                         .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.Property<bool>("LockoutEnabled")
+                        .HasColumnName("lockout_enabled")
                         .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnName("lockout_end")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("NormalizedEmail")
+                        .HasColumnName("normalized_email")
                         .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("NormalizedUserName")
+                        .HasColumnName("normalized_user_name")
                         .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("PasswordHash")
+                        .HasColumnName("password_hash")
                         .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
+                        .HasColumnName("phone_number")
                         .HasColumnType("text");
 
                     b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnName("phone_number_confirmed")
                         .HasColumnType("boolean");
 
                     b.Property<string>("SecurityStamp")
+                        .HasColumnName("security_stamp")
                         .HasColumnType("text");
 
                     b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnName("two_factor_enabled")
                         .HasColumnType("boolean");
 
                     b.Property<string>("UserName")
+                        .HasColumnName("user_name")
                         .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_users");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -221,100 +270,123 @@ namespace TagDossier.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnName("name")
                         .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_connectors");
 
-                    b.ToTable("Connector");
+                    b.ToTable("connectors");
                 });
 
             modelBuilder.Entity("TagDossier.Domain.Entities.Dossier", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<long>("ResourceId")
+                        .HasColumnName("resource_id")
                         .HasColumnType("bigint");
 
                     b.Property<int>("TagId")
+                        .HasColumnName("tag_id")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_dossiers");
 
-                    b.HasIndex("ResourceId");
+                    b.HasIndex("ResourceId")
+                        .HasName("ix_dossiers_resource_id");
 
-                    b.HasIndex("TagId");
+                    b.HasIndex("TagId")
+                        .HasName("ix_dossiers_tag_id");
 
-                    b.ToTable("Dossier");
+                    b.ToTable("dossiers");
                 });
 
             modelBuilder.Entity("TagDossier.Domain.Entities.Resource", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("ExternalId")
                         .IsRequired()
+                        .HasColumnName("external_id")
                         .HasColumnType("character varying(2000)")
                         .HasMaxLength(2000);
 
                     b.Property<int>("SourceId")
+                        .HasColumnName("source_id")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_resource");
 
-                    b.HasIndex("SourceId");
+                    b.HasIndex("SourceId")
+                        .HasName("ix_resource_source_id");
 
-                    b.ToTable("Resource");
+                    b.ToTable("resource");
                 });
 
             modelBuilder.Entity("TagDossier.Domain.Entities.Source", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("ConnectorId")
+                        .HasColumnName("connector_id")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_sources");
 
-                    b.HasIndex("ConnectorId");
+                    b.HasIndex("ConnectorId")
+                        .HasName("ix_sources_connector_id");
 
-                    b.ToTable("Source");
+                    b.ToTable("sources");
                 });
 
             modelBuilder.Entity("TagDossier.Domain.Entities.Tag", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnName("name")
                         .HasColumnType("character varying(1000)")
                         .HasMaxLength(1000);
 
                     b.Property<int?>("ParentId")
+                        .HasColumnName("parent_id")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_tags");
 
-                    b.HasIndex("ParentId");
+                    b.HasIndex("ParentId")
+                        .HasName("ix_tags_parent_id");
 
-                    b.ToTable("Tag");
+                    b.ToTable("tags");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -322,6 +394,7 @@ namespace TagDossier.Persistence.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
+                        .HasConstraintName("fk_role_claims_asp_net_roles_identity_role_guid_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -331,6 +404,7 @@ namespace TagDossier.Persistence.Migrations
                     b.HasOne("TagDossier.Domain.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .HasConstraintName("fk_user_claims_asp_net_users_application_user_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -340,6 +414,7 @@ namespace TagDossier.Persistence.Migrations
                     b.HasOne("TagDossier.Domain.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .HasConstraintName("fk_user_logins_asp_net_users_application_user_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -349,12 +424,14 @@ namespace TagDossier.Persistence.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
+                        .HasConstraintName("fk_user_roles_asp_net_roles_identity_role_guid_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TagDossier.Domain.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .HasConstraintName("fk_user_roles_asp_net_users_application_user_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -364,6 +441,7 @@ namespace TagDossier.Persistence.Migrations
                     b.HasOne("TagDossier.Domain.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .HasConstraintName("fk_user_tokens_asp_net_users_application_user_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -373,63 +451,79 @@ namespace TagDossier.Persistence.Migrations
                     b.HasOne("TagDossier.Domain.Entities.Resource", "Resource")
                         .WithMany("Dossiers")
                         .HasForeignKey("ResourceId")
+                        .HasConstraintName("fk_dossiers_resource_resource_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TagDossier.Domain.Entities.Tag", "Tag")
                         .WithMany()
                         .HasForeignKey("TagId")
+                        .HasConstraintName("fk_dossiers_tags_tag_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.OwnsOne("TagDossier.Domain.ValueObjects.AuditInfo", "Created", b1 =>
                         {
                             b1.Property<long>("DossierId")
+                                .HasColumnName("id")
                                 .HasColumnType("bigint");
 
                             b1.Property<Guid?>("ById")
+                                .HasColumnName("created_by_id")
                                 .HasColumnType("uuid");
 
                             b1.Property<DateTime>("On")
+                                .HasColumnName("created_on")
                                 .HasColumnType("timestamp without time zone");
 
-                            b1.HasKey("DossierId");
+                            b1.HasKey("DossierId")
+                                .HasName("pk_dossiers");
 
-                            b1.HasIndex("ById");
+                            b1.HasIndex("ById")
+                                .HasName("ix_dossiers_created_by_id");
 
-                            b1.ToTable("Dossier");
+                            b1.ToTable("dossiers");
 
                             b1.HasOne("TagDossier.Domain.Entities.ApplicationUser", "By")
                                 .WithMany()
-                                .HasForeignKey("ById");
+                                .HasForeignKey("ById")
+                                .HasConstraintName("fk_dossiers_asp_net_users_created_by_id");
 
                             b1.WithOwner()
-                                .HasForeignKey("DossierId");
+                                .HasForeignKey("DossierId")
+                                .HasConstraintName("fk_dossiers_dossiers_id");
                         });
 
                     b.OwnsOne("TagDossier.Domain.ValueObjects.AuditInfo", "LastModified", b1 =>
                         {
                             b1.Property<long>("DossierId")
+                                .HasColumnName("id")
                                 .HasColumnType("bigint");
 
                             b1.Property<Guid?>("ById")
+                                .HasColumnName("last_modified_by_id")
                                 .HasColumnType("uuid");
 
                             b1.Property<DateTime>("On")
+                                .HasColumnName("last_modified_on")
                                 .HasColumnType("timestamp without time zone");
 
-                            b1.HasKey("DossierId");
+                            b1.HasKey("DossierId")
+                                .HasName("pk_dossiers");
 
-                            b1.HasIndex("ById");
+                            b1.HasIndex("ById")
+                                .HasName("ix_dossiers_last_modified_by_id");
 
-                            b1.ToTable("Dossier");
+                            b1.ToTable("dossiers");
 
                             b1.HasOne("TagDossier.Domain.Entities.ApplicationUser", "By")
                                 .WithMany()
-                                .HasForeignKey("ById");
+                                .HasForeignKey("ById")
+                                .HasConstraintName("fk_dossiers_asp_net_users_last_modified_by_id");
 
                             b1.WithOwner()
-                                .HasForeignKey("DossierId");
+                                .HasForeignKey("DossierId")
+                                .HasConstraintName("fk_dossiers_dossiers_id");
                         });
                 });
 
@@ -438,57 +532,72 @@ namespace TagDossier.Persistence.Migrations
                     b.HasOne("TagDossier.Domain.Entities.Source", "Source")
                         .WithMany()
                         .HasForeignKey("SourceId")
+                        .HasConstraintName("fk_resource_sources_source_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.OwnsOne("TagDossier.Domain.ValueObjects.AuditInfo", "Created", b1 =>
                         {
                             b1.Property<long>("ResourceId")
+                                .HasColumnName("id")
                                 .HasColumnType("bigint");
 
                             b1.Property<Guid?>("ById")
+                                .HasColumnName("created_by_id")
                                 .HasColumnType("uuid");
 
                             b1.Property<DateTime>("On")
+                                .HasColumnName("created_on")
                                 .HasColumnType("timestamp without time zone");
 
-                            b1.HasKey("ResourceId");
+                            b1.HasKey("ResourceId")
+                                .HasName("pk_resource");
 
-                            b1.HasIndex("ById");
+                            b1.HasIndex("ById")
+                                .HasName("ix_resource_created_by_id");
 
-                            b1.ToTable("Resource");
+                            b1.ToTable("resource");
 
                             b1.HasOne("TagDossier.Domain.Entities.ApplicationUser", "By")
                                 .WithMany()
-                                .HasForeignKey("ById");
+                                .HasForeignKey("ById")
+                                .HasConstraintName("fk_resource_asp_net_users_created_by_id");
 
                             b1.WithOwner()
-                                .HasForeignKey("ResourceId");
+                                .HasForeignKey("ResourceId")
+                                .HasConstraintName("fk_resource_resource_id");
                         });
 
                     b.OwnsOne("TagDossier.Domain.ValueObjects.AuditInfo", "LastModified", b1 =>
                         {
                             b1.Property<long>("ResourceId")
+                                .HasColumnName("id")
                                 .HasColumnType("bigint");
 
                             b1.Property<Guid?>("ById")
+                                .HasColumnName("last_modified_by_id")
                                 .HasColumnType("uuid");
 
                             b1.Property<DateTime>("On")
+                                .HasColumnName("last_modified_on")
                                 .HasColumnType("timestamp without time zone");
 
-                            b1.HasKey("ResourceId");
+                            b1.HasKey("ResourceId")
+                                .HasName("pk_resource");
 
-                            b1.HasIndex("ById");
+                            b1.HasIndex("ById")
+                                .HasName("ix_resource_last_modified_by_id");
 
-                            b1.ToTable("Resource");
+                            b1.ToTable("resource");
 
                             b1.HasOne("TagDossier.Domain.Entities.ApplicationUser", "By")
                                 .WithMany()
-                                .HasForeignKey("ById");
+                                .HasForeignKey("ById")
+                                .HasConstraintName("fk_resource_asp_net_users_last_modified_by_id");
 
                             b1.WithOwner()
-                                .HasForeignKey("ResourceId");
+                                .HasForeignKey("ResourceId")
+                                .HasConstraintName("fk_resource_resource_id");
                         });
                 });
 
@@ -497,57 +606,72 @@ namespace TagDossier.Persistence.Migrations
                     b.HasOne("TagDossier.Domain.Entities.Connector", "Connector")
                         .WithMany()
                         .HasForeignKey("ConnectorId")
+                        .HasConstraintName("fk_sources_connectors_connector_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.OwnsOne("TagDossier.Domain.ValueObjects.AuditInfo", "Created", b1 =>
                         {
-                            b1.Property<int?>("SourceTempId")
+                            b1.Property<int>("SourceId")
+                                .HasColumnName("id")
                                 .HasColumnType("integer");
 
                             b1.Property<Guid?>("ById")
+                                .HasColumnName("created_by_id")
                                 .HasColumnType("uuid");
 
                             b1.Property<DateTime>("On")
+                                .HasColumnName("created_on")
                                 .HasColumnType("timestamp without time zone");
 
-                            b1.HasKey("SourceTempId");
+                            b1.HasKey("SourceId")
+                                .HasName("pk_sources");
 
-                            b1.HasIndex("ById");
+                            b1.HasIndex("ById")
+                                .HasName("ix_sources_created_by_id");
 
-                            b1.ToTable("Source");
+                            b1.ToTable("sources");
 
                             b1.HasOne("TagDossier.Domain.Entities.ApplicationUser", "By")
                                 .WithMany()
-                                .HasForeignKey("ById");
+                                .HasForeignKey("ById")
+                                .HasConstraintName("fk_sources_asp_net_users_created_by_id");
 
                             b1.WithOwner()
-                                .HasForeignKey("SourceTempId");
+                                .HasForeignKey("SourceId")
+                                .HasConstraintName("fk_sources_sources_id");
                         });
 
                     b.OwnsOne("TagDossier.Domain.ValueObjects.AuditInfo", "LastModified", b1 =>
                         {
-                            b1.Property<int?>("SourceTempId1")
+                            b1.Property<int>("SourceId")
+                                .HasColumnName("id")
                                 .HasColumnType("integer");
 
                             b1.Property<Guid?>("ById")
+                                .HasColumnName("last_modified_by_id")
                                 .HasColumnType("uuid");
 
                             b1.Property<DateTime>("On")
+                                .HasColumnName("last_modified_on")
                                 .HasColumnType("timestamp without time zone");
 
-                            b1.HasKey("SourceTempId1");
+                            b1.HasKey("SourceId")
+                                .HasName("pk_sources");
 
-                            b1.HasIndex("ById");
+                            b1.HasIndex("ById")
+                                .HasName("ix_sources_last_modified_by_id");
 
-                            b1.ToTable("Source");
+                            b1.ToTable("sources");
 
                             b1.HasOne("TagDossier.Domain.Entities.ApplicationUser", "By")
                                 .WithMany()
-                                .HasForeignKey("ById");
+                                .HasForeignKey("ById")
+                                .HasConstraintName("fk_sources_asp_net_users_last_modified_by_id");
 
                             b1.WithOwner()
-                                .HasForeignKey("SourceTempId1");
+                                .HasForeignKey("SourceId")
+                                .HasConstraintName("fk_sources_sources_id");
                         });
                 });
 
@@ -555,61 +679,77 @@ namespace TagDossier.Persistence.Migrations
                 {
                     b.HasOne("TagDossier.Domain.Entities.Tag", "Parent")
                         .WithMany()
-                        .HasForeignKey("ParentId");
+                        .HasForeignKey("ParentId")
+                        .HasConstraintName("fk_tags_tags_parent_id");
 
                     b.OwnsOne("TagDossier.Domain.ValueObjects.AuditInfo", "Created", b1 =>
                         {
                             b1.Property<int>("TagId")
+                                .HasColumnName("id")
                                 .HasColumnType("integer");
 
                             b1.Property<Guid?>("ById")
+                                .HasColumnName("created_by_id")
                                 .HasColumnType("uuid");
 
                             b1.Property<DateTime>("On")
+                                .HasColumnName("created_on")
                                 .HasColumnType("timestamp without time zone");
 
-                            b1.HasKey("TagId");
+                            b1.HasKey("TagId")
+                                .HasName("pk_tags");
 
-                            b1.HasIndex("ById");
+                            b1.HasIndex("ById")
+                                .HasName("ix_tags_created_by_id");
 
-                            b1.ToTable("Tag");
+                            b1.ToTable("tags");
 
                             b1.HasOne("TagDossier.Domain.Entities.ApplicationUser", "By")
                                 .WithMany()
-                                .HasForeignKey("ById");
+                                .HasForeignKey("ById")
+                                .HasConstraintName("fk_tags_asp_net_users_created_by_id");
 
                             b1.WithOwner()
-                                .HasForeignKey("TagId");
+                                .HasForeignKey("TagId")
+                                .HasConstraintName("fk_tags_tags_id");
                         });
 
                     b.OwnsOne("TagDossier.Domain.ValueObjects.AuditInfo", "LastModified", b1 =>
                         {
                             b1.Property<int>("TagId")
+                                .HasColumnName("id")
                                 .HasColumnType("integer");
 
                             b1.Property<Guid?>("ById")
+                                .HasColumnName("last_modified_by_id")
                                 .HasColumnType("uuid");
 
                             b1.Property<DateTime>("On")
+                                .HasColumnName("last_modified_on")
                                 .HasColumnType("timestamp without time zone");
 
-                            b1.HasKey("TagId");
+                            b1.HasKey("TagId")
+                                .HasName("pk_tags");
 
-                            b1.HasIndex("ById");
+                            b1.HasIndex("ById")
+                                .HasName("ix_tags_last_modified_by_id");
 
-                            b1.ToTable("Tag");
+                            b1.ToTable("tags");
 
                             b1.HasOne("TagDossier.Domain.Entities.ApplicationUser", "By")
                                 .WithMany()
-                                .HasForeignKey("ById");
+                                .HasForeignKey("ById")
+                                .HasConstraintName("fk_tags_asp_net_users_last_modified_by_id");
 
                             b1.WithOwner()
-                                .HasForeignKey("TagId");
+                                .HasForeignKey("TagId")
+                                .HasConstraintName("fk_tags_tags_id");
                         });
 
                     b.OwnsOne("TagDossier.Domain.ValueObjects.Color", "Color", b1 =>
                         {
                             b1.Property<int>("TagId")
+                                .HasColumnName("id")
                                 .HasColumnType("integer");
 
                             b1.Property<string>("Background")
@@ -622,12 +762,14 @@ namespace TagDossier.Persistence.Migrations
                                 .HasColumnName("TextColor")
                                 .HasColumnType("varchar(6)");
 
-                            b1.HasKey("TagId");
+                            b1.HasKey("TagId")
+                                .HasName("pk_tags");
 
-                            b1.ToTable("Tag");
+                            b1.ToTable("tags");
 
                             b1.WithOwner()
-                                .HasForeignKey("TagId");
+                                .HasForeignKey("TagId")
+                                .HasConstraintName("fk_color_tags_tag_id");
                         });
                 });
 #pragma warning restore 612, 618
