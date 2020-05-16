@@ -10,23 +10,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{0C1DAA51-0A66-498D-BCBE-CC76ED9FA8A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagDossier.Common", "src\TagDossier.Common\TagDossier.Common.csproj", "{DA96808E-78E7-492C-8A6C-EEAE1740C1F3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "src\Common\Common.csproj", "{DA96808E-78E7-492C-8A6C-EEAE1740C1F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagDossier.Application", "src\TagDossier.Application\TagDossier.Application.csproj", "{554DD0FA-8EB8-453C-8DF5-1EAC09BC8887}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "src\Application\Application.csproj", "{554DD0FA-8EB8-453C-8DF5-1EAC09BC8887}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagDossier.Domain", "src\TagDossier.Domain\TagDossier.Domain.csproj", "{A1751B33-420C-4355-B0E5-796F202A01B4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "src\Domain\Domain.csproj", "{A1751B33-420C-4355-B0E5-796F202A01B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagDossier.Infrastructure", "src\TagDossier.Infrastructure\TagDossier.Infrastructure.csproj", "{F77F5993-F66E-4271-ADB0-DD1ED70AD8B6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "src\Infrastructure\Infrastructure.csproj", "{F77F5993-F66E-4271-ADB0-DD1ED70AD8B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagDossier.Persistence", "src\TagDossier.Persistence\TagDossier.Persistence.csproj", "{C4562980-1091-46A5-B940-D5854119BEE7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence", "src\Persistence\Persistence.csproj", "{C4562980-1091-46A5-B940-D5854119BEE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagDossier.Api", "src\TagDossier.Api\TagDossier.Api.csproj", "{D0173FA4-2857-4730-B766-F0F0AC4152A5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "src\Api\Api.csproj", "{D0173FA4-2857-4730-B766-F0F0AC4152A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagDossier.Web", "src\TagDossier.Web\TagDossier.Web.csproj", "{AA25A6FA-88B7-4463-B9F3-6B1E3984FDE2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "src\Web\Web.csproj", "{AA25A6FA-88B7-4463-B9F3-6B1E3984FDE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagDossier.CommonTests", "tests\TagDossier.CommonTests\TagDossier.CommonTests.csproj", "{823EBAD4-1F12-41DA-B476-FECCF054E101}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonTests", "tests\CommonTests\CommonTests.csproj", "{823EBAD4-1F12-41DA-B476-FECCF054E101}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagDossier.IntegrationTests", "tests\TagDossier.IntegrationTests\TagDossier.IntegrationTests.csproj", "{80E53DEE-5C73-410F-816A-1D430DA233F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.IntegrationTests", "tests\Application.IntegrationTests\Application.IntegrationTests.csproj", "{80E53DEE-5C73-410F-816A-1D430DA233F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
